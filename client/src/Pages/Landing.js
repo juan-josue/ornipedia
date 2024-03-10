@@ -1,13 +1,28 @@
 //import Header from "../Components/Header"
-import FileUploadForm from "../Components/ImageForm"
+import { useState } from 'react';
+import FileUploadForm from '../Components/ImageForm';
+import './Landing.css';
 export default function Landing() {
-  return (
-    <div>
-      {/* <Header /> */}
-      <div Row className=" d-flex justify-content-center pt-5">
-        <h1>OrniPedia</h1>
-      </div>
-      <FileUploadForm />
-    </div>
-  )
+    const [response, setResponse] = useState('');
+
+    return (
+        <div className="main">
+            <div className="nav">
+                <h1>Ornipedia</h1>
+            </div>
+            {!response && (
+                <>
+                    <div className="upload">
+                        <FileUploadForm
+                            setResponse={(res) => {
+                                setResponse(res);
+                            }}
+                        />
+                    </div>
+                </>
+            )}
+
+            <div className={"response " + (response ? "big" : "small")}>{response}</div>
+        </div>
+    );
 }

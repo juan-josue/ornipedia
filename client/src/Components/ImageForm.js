@@ -3,7 +3,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import axios from 'axios'; 
 
-function FileUploadForm() {
+function FileUploadForm(props) {
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
   const [serverResponse, setServerResponse] = useState(null);
@@ -46,7 +46,7 @@ function FileUploadForm() {
         );
 
         console.log('TensorFlow response:', response.data);
-        setServerResponse(response.data); // Guarda la respuesta en el estado
+        props.setResponse(response.data); // Guarda la respuesta en el estado
       } catch (error) {
         console.error('Error sending image:', error);
       }
@@ -55,31 +55,19 @@ function FileUploadForm() {
   
   return (
     <div>
-      <div className='d-flex justify-content-center pb-4'>
-        <h2>Upload an Image</h2>
-      </div>
-      <Row className='justify-content-center'>
-        <Col xs={12} md={6}>
-          <div className='d-flex justify-content-center'>
-            <form onSubmit={handleSubmit}>
-              <input type="file" onChange={handleFileChange} />
-              <button type="submit">Scan Image</button>
-            </form>
-          </div>
-        </Col>
-      </Row>
-      <Row className='justify-content-center'>
-        <Col xs={12} md={6}>
-          {previewImage && (
-            <div>
-              <h3 className="text-center pt-5">Preview</h3>
-              <div className="d-flex justify-content-center pt-4">
-                <img src={previewImage} alt="Preview" style={{ maxWidth: '100%', maxHeight: '200px' }} />
-              </div>
-            </div>
-          )}
-        </Col>
-      </Row>
+        <div className='preview'>
+          <div className='image-container'>
+            {previewImage && (
+                <img className='upload-image' src={previewImage} alt="Preview" />
+              )}
+            {!previewImage && <p>Upload a bird photo</p>}
+          </div>  
+        </div>
+        
+        <form className='form' onSubmit={handleSubmit}>
+          <input className='upload-btn' type="file" onChange={handleFileChange} />
+          <button className='scan-btn' type="submit">Scan Image</button>
+        </form>
       {serverResponse && (
         <Row className='justify-content-center'>
           <Col xs={12} md={6}>
