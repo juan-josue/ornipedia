@@ -132,3 +132,6 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MODEL_PATH = os.path.join(BASE_DIR, "polls", "model.keras")
+
+KEY_PATH = os.path.join(BASE_DIR, "polls", "key.json")
+

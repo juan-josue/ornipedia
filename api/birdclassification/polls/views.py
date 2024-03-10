@@ -20,6 +20,8 @@ from llamaapi import LlamaAPI
 # Load the pre-trained model
 model = tf.keras.models.load_model(settings.MODEL_PATH)
 
+key = settings.KEY_PATH
+
 @csrf_exempt
 def index(request):
     if request.method == "POST":
@@ -32,7 +34,10 @@ def index(request):
     return HttpResponse("not post req")
 
 def describe_bird(species):
-    llama = LlamaAPI("LL-TAlkTWSBjhKTi2P6NMtH40khfQnZASdmVEWMbXOJK9l2C2hepnrTQMxLngrKmaLZ")
+    with open(key, 'r') as file:
+        data = json.load(file)
+    key_value = data['key']
+    llama = LlamaAPI(key_value)
 
     api_request_json = {
     "messages": [
