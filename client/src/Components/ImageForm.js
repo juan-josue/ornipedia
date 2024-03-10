@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import axios from 'axios'; 
 
 function FileUploadForm() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -11,17 +12,26 @@ function FileUploadForm() {
     setPreviewImage(URL.createObjectURL(event.target.files[0]));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Handle file upload: e.g., send the file to the server
     if (selectedFile) {
-      const formData = new FormData();
-      formData.append('file', selectedFile);
-      // Possible request to server to handle the file upload can go here
-      console.log('Uploading file...', formData);
+      const reader = new FileReader();
+      reader.readAsDataURL(selectedFile); 
+
+      reader.onloadend = async () => {
+        const base64Image = reader.result; 
+
+        try {
+          const response = await axios.post('/your-tensorflow-api-endpoint', {
+            image: base64Image
+          });
+          console.log('TensorFlow response:', response); 
+        } catch (error) {
+          console.error('Error sending image:', error);
+        }
+      };
     }
   };
-
   return (
     <div>
       <div className='d-flex justify-content-center pb-4'>
