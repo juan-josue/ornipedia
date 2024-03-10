@@ -12,26 +12,52 @@ function FileUploadForm() {
     setPreviewImage(URL.createObjectURL(event.target.files[0]));
   };
 
+  const getBase64 = (file) => {
+    return new Promise(resolve => {
+      let fileInfo;
+      let baseURL = "";
+      // Make new FileReader
+      let reader = new FileReader();
+
+      // Convert the file to base64 text
+      reader.readAsDataURL(file);
+
+      // on reader load somthing...
+      reader.onload = () => {
+        // Make a fileInfo Object
+        baseURL = reader.result;
+        resolve(baseURL);
+      };
+    });
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (selectedFile) {
-      const reader = new FileReader();
-      reader.readAsDataURL(selectedFile); 
-
-      reader.onloadend = async () => {
-        const base64Image = reader.result; 
-
+      // Set up the onload event handler
         try {
-          const response = await axios.post('/your-tensorflow-api-endpoint', {
-            image: base64Image
-          });
-          console.log('TensorFlow response:', response); 
+          const encoded_img = await getBase64(selectedFile);
+          console.log(encoded_img)
+          // Send the file content as base64 encoded in the Axios POST request
+          const response = await axios.post(
+            'http://127.0.0.1:8000/polls/',
+            {
+              base_64_encoded_img: encoded_img,
+            },
+            {
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            }
+          );
+          console.log('TensorFlow response:', response.data);
         } catch (error) {
           console.error('Error sending image:', error);
         }
-      };
     }
   };
+
+  
   return (
     <div>
       <div className='d-flex justify-content-center pb-4'>
