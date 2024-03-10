@@ -6,6 +6,7 @@ import axios from 'axios';
 function FileUploadForm() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
+  const [serverResponse, setServerResponse] = useState(null);
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -14,17 +15,10 @@ function FileUploadForm() {
 
   const getBase64 = (file) => {
     return new Promise(resolve => {
-      let fileInfo;
       let baseURL = "";
-      // Make new FileReader
       let reader = new FileReader();
-
-      // Convert the file to base64 text
       reader.readAsDataURL(file);
-
-      // on reader load somthing...
       reader.onload = () => {
-        // Make a fileInfo Object
         baseURL = reader.result;
         resolve(baseURL);
       };
@@ -34,29 +28,30 @@ function FileUploadForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (selectedFile) {
-      // Set up the onload event handler
-        try {
-          const encoded_img = await getBase64(selectedFile);
-          console.log(encoded_img)
-          // Send the file content as base64 encoded in the Axios POST request
-          const response = await axios.post(
-            'http://127.0.0.1:8000/polls/',
-            {
-              base_64_encoded_img: encoded_img,
+      try {
+        const encoded_img = await getBase64(selectedFile);
+        const encoded_data = encoded_img.split(",")[1];
+        console.log("encoded",encoded_data);
+        
+        const response = await axios.post(
+          'http://127.0.0.1:8000/polls/',
+          {
+            base_64_encoded_img: encoded_data,
+          },
+          {
+            headers: {
+              'Content-Type': 'application/json',
             },
-            {
-              headers: {
-                'Content-Type': 'application/json',
-              },
-            }
-          );
-          console.log('TensorFlow response:', response.data);
-        } catch (error) {
-          console.error('Error sending image:', error);
-        }
+          }
+        );
+
+        console.log('TensorFlow response:', response.data);
+        setServerResponse(response.data); // Guarda la respuesta en el estado
+      } catch (error) {
+        console.error('Error sending image:', error);
+      }
     }
   };
-
   
   return (
     <div>
@@ -85,6 +80,18 @@ function FileUploadForm() {
           )}
         </Col>
       </Row>
+      {serverResponse && (
+        <Row className='justify-content-center'>
+          <Col xs={12} md={6}>
+            <div>
+              <h3 className="text-center pt-5">Server Response</h3>
+              <div className="d-flex justify-content-center pt-4">
+                <p>{serverResponse}</p>
+              </div>
+            </div>
+          </Col>
+        </Row>
+      )}
     </div>
   );
 }

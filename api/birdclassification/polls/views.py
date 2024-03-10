@@ -26,6 +26,7 @@ def index(request):
         data = json.loads(request.body)
         base_64_encoded_img = data["base_64_encoded_img"]
         classification = classify_bird(base_64_encoded_img)
+        
         desc = describe_bird(classification)
         return HttpResponse(desc)
     return HttpResponse("not post req")
