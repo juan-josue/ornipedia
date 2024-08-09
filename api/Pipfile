@@ -9,6 +9,7 @@ requests = "*"
 pillow = "*"
 tensorflow = "*"
 openai = "*"
+flask-cors = "*"
 
 [dev-packages]
 

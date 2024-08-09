@@ -5,7 +5,7 @@ predict = Blueprint('predict', __name__)
 from app.utils.predict_species_from_url import predict_species_from_url
 
 @predict.route('/', methods=['POST'])
-def predict_image_from_url():
+def predict_image_from_url():    
     # Retrieve image url from request
     data = request.get_json()
     if 'image_url' not in data:
@@ -17,6 +17,8 @@ def predict_image_from_url():
     species_data = predict_species_from_url(image_url)
     
     # Return output as json
-    return jsonify(species_data)
+    response = jsonify(species_data)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response;
     
     
