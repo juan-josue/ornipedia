@@ -36,17 +36,9 @@ def predict_species_from_url(image_url):
     predictions = model.predict(img_array)
     score = tf.nn.softmax(predictions[0])
 
-    # Retrieve most likely prediction, confidence score, and description
-    predicted_class = class_names[np.argmax(score)]
-    confidence = 100 * np.max(score)
-    description = retrieve_species_data(predicted_class)
-    
-    # Save audio transcript to file
-    text_to_audio(description)
+    # Get the top 5 predictions and confidence scores
+    top_5_indices = np.argsort(score)[-5:][::-1]
+    top_5_predictions = [{"class": class_names[i], "confidence": 100 * score[i].numpy()} for i in top_5_indices]
 
     # Return the result as a JSON response
-    return {
-        "predicted_class": predicted_class,
-        "confidence": confidence,
-        "description": description
-    }
+    return top_5_predictions
