@@ -1,0 +1,19 @@
+from flask import Blueprint, request, jsonify
+
+species_data = Blueprint('species_data', __name__)
+
+from app.utils.retrieve_species_data import retrieve_species_data
+
+@species_data.route('/description', methods=['GET'])
+def get_species_description():    
+    # Retrieve species class from request
+    species_class = request.args.get('species_class')
+    
+    # Retrieve species data
+    species_data = retrieve_species_data(species_class)
+    
+    # Return output as json
+    response = jsonify(species_data)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response;
+    
