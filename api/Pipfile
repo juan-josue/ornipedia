@@ -10,6 +10,7 @@ pillow = "*"
 tensorflow = "*"
 openai = "*"
 flask-cors = "*"
+supabase = "*"
 
 [dev-packages]
 
