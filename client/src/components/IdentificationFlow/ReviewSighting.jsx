@@ -1,14 +1,14 @@
 import React from "react";
 import Map, { Marker } from "react-map-gl";
 
-export default function ReviewEntry({ entryData, onConfirmation }) {
+export default function ReviewSighting({ sightingData, onConfirmation }) {
   const {
     speciesClass,
     coordinates: { latitude, longitude },
     date,
-  } = entryData;
+  } = sightingData;
 
-  const handleConfirmation = () => {
+  const handleConfirmation = async () => {
     onConfirmation();
   };
 
@@ -24,9 +24,9 @@ export default function ReviewEntry({ entryData, onConfirmation }) {
         style={{ width: 600, height: 400 }}
         mapStyle="mapbox://styles/mapbox/satellite-streets-v12"
         dragPan={false}
-        scrollZoom={false} 
-        doubleClickZoom={false} 
-        dragRotate={false} 
+        scrollZoom={false}
+        doubleClickZoom={false}
+        dragRotate={false}
         touchZoomRotate={false}
       >
         <Marker

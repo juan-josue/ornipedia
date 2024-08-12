@@ -5,7 +5,9 @@ import SelectSpecies from "./SelectSpecies";
 import SpeciesData from "./SpeciesData";
 import Location from "./Location";
 import SelectDate from "./SelectDate";
-import ReviewEntry from "./ReviewEntry";
+import ReviewSighting from "./ReviewSighting";
+
+import { reportSighting } from "../../services/sightings";
 
 export default function IdentificationFlow() {
   const [step, setStep] = useState("IMAGE UPLOAD");
@@ -13,7 +15,6 @@ export default function IdentificationFlow() {
   const [speciesClass, setSpeciesClass] = useState("");
   const [coordinates, setCoordinates] = useState(null);
   const [date, setDate] = useState(new Date());
-  const [entryData, setEntryData] = useState(null);
 
   const handleImageUpload = (url) => {
     setImageUrl(url);
@@ -39,13 +40,8 @@ export default function IdentificationFlow() {
     setStep("REVIEW ENTRY");
   };
 
-  const handleEntryConfirmation = () => {
-    console.log("user submitted entry: ", {
-      speciesClass,
-      coordinates,
-      date,
-    });
-    setEntryData({
+  const handleSightingConfirmation = () => {
+    reportSighting({
       speciesClass,
       coordinates,
       date,
@@ -77,13 +73,13 @@ export default function IdentificationFlow() {
       return <SelectDate onConfirmation={handleDateConfirmation} />;
     case "REVIEW ENTRY":
       return (
-        <ReviewEntry
-          entryData={{
+        <ReviewSighting
+          sightingData={{
             speciesClass,
             coordinates,
             date,
           }}
-          onConfirmation={handleEntryConfirmation}
+          onConfirmation={handleSightingConfirmation}
         />
       );
     default:
