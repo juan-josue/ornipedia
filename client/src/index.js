@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import './input.css'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
