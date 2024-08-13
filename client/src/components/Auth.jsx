@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { supabase } from "../services/supabaseClient";
+import { signup, signout } from "../services/auth";
 
 export default function Auth() {
   const navigate = useNavigate();
@@ -9,41 +9,15 @@ export default function Auth() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const signup = async () => {
-    const { data, error } = await supabase.auth.signUp({
-      email: email,
-      password: password,
-    });
-
-    if (error) {
-      console.log("Failed sign up", error);
-    } else {
-      console.log("Successful sign up", data);
-      localStorage.setItem("uid", data.user.id);
-
-      const { error: insertError } = await supabase.from("users").insert({
-        id: data.user.id,
-      });
-
-      if (insertError) {
-        console.error(
-          "Error inserting user into customer_users table:",
-          insertError
-        );
-      }
-
-      setUser(data.user);
-
-      navigate("/identification-flow");
-    }
+  const handleSignup = async () => {
+    const data = await signup(email, password);
+    setUser(data.user);
+    navigate("/identification-flow");
   };
 
-  const signout = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (!error) {
-      localStorage.clear("user");
-      setUser(null);
-    }
+  const handleSignout = async () => {
+    signout();
+    setUser(null);
   };
 
   useEffect(() => {
@@ -69,9 +43,9 @@ export default function Auth() {
           setPassword(e.target.value);
         }}
       />
-      <button onClick={signup}>Click me</button>
+      <button onClick={handleSignup}>Click me</button>
       {user ? (
-        <button onClick={signout}>Sign tf out</button>
+        <button onClick={handleSignout}>Sign tf out</button>
       ) : (
         <span>Logged tf out</span>
       )}

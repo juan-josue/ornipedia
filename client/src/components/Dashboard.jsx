@@ -3,6 +3,7 @@ import Map, { Marker } from "react-map-gl";
 import { useNavigate } from "react-router-dom";
 
 import { getAllSightings } from "../services/sightings";
+import { signout } from "../services/auth";
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -14,9 +15,14 @@ export default function Dashboard() {
     zoom: 1,
   });
 
-  const handleClick = () => {
+  const handleIdentifySpecies = () => {
     navigate("/identification-flow");
   };
+
+  const handleSignOut = () => {
+    signout();
+    navigate("/");
+  }
 
   useEffect(() => {
     const fetchSightings = async () => {
@@ -49,7 +55,8 @@ export default function Dashboard() {
           </Marker>
         ))}
       </Map>
-      <button onClick={handleClick}>Report A Sighting</button>
+      <button onClick={handleIdentifySpecies}>Report A Sighting</button>
+      <button onClick={handleSignOut}>Sign Out</button>
     </div>
   );
 }
