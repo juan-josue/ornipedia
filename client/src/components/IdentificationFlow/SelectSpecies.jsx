@@ -5,9 +5,19 @@ import speciesDescriptionRequest from "../../services/speciesDescriptionRequest"
 export default function SpeciesSelector({ imageUrl, onConfirmation }) {
   const [speciesData, setSpeciesData] = useState([]);
   const [selectedSpecies, setSelectedSpecies] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSpeciesSelect = (species) => {
+    setSelectedSpecies(species);
+  };
+
+  const handleConfirmation = () => {
+    onConfirmation(selectedSpecies.class);
+  };
 
   useEffect(() => {
     const fetchSpeciesData = async () => {
+      setIsLoading(true);
       try {
         const predictions = await predictionRequest(imageUrl);
         const speciesDataWithDescriptions = await Promise.all(
@@ -19,6 +29,7 @@ export default function SpeciesSelector({ imageUrl, onConfirmation }) {
           })
         );
         setSpeciesData(speciesDataWithDescriptions);
+        setIsLoading(false);
       } catch (error) {
         console.error("Error fetching species data:", error);
       }
@@ -29,23 +40,23 @@ export default function SpeciesSelector({ imageUrl, onConfirmation }) {
     }
   }, [imageUrl]);
 
-  const handleSpeciesSelect = (species) => {
-    setSelectedSpecies(species);
-  };
-
-  const handleConfirmation = () => {
-    onConfirmation(selectedSpecies.class);
-  };
-
   return (
     <div>
-      <ul>
-        {speciesData.map((species) => (
-          <li key={species.class} onClick={() => handleSpeciesSelect(species)}>
-            {species.class}
-          </li>
-        ))}
-      </ul>
+      {isLoading ? (
+        "Predicting species..."
+      ) : (
+        <ul>
+          {speciesData.map((species) => (
+            <li
+              key={species.class}
+              onClick={() => handleSpeciesSelect(species)}
+            >
+              {species.class}
+            </li>
+          ))}
+        </ul>
+      )}
+
       {selectedSpecies && (
         <div>
           <h2>{selectedSpecies.class}</h2>
