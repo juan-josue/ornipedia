@@ -48,7 +48,7 @@ export default function ReviewSighting({ sightingData, onConfirmation }) {
       </Map>
       <ul>
         <li>
-          <img src={imageUrl} alt="selected bird species" />
+          <img src={imageUrl} width={20} height={20} alt="selected bird species" />
         </li>
         <li>{speciesClass}</li>
         <li>{`lat: ${latitude} long: ${longitude}`}</li>
