@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
+
 import { supabase } from "../services/supabaseClient";
 
 export default function Auth() {
+  const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -30,6 +33,8 @@ export default function Auth() {
       }
 
       setUser(data.user);
+
+      navigate("/identification-flow");
     }
   };
 
