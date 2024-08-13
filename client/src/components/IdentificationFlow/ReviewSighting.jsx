@@ -3,9 +3,10 @@ import Map, { Marker } from "react-map-gl";
 
 export default function ReviewSighting({ sightingData, onConfirmation }) {
   const {
+    imageUrl,
     speciesClass,
     coordinates: { latitude, longitude },
-    date,
+    date
   } = sightingData;
 
   const handleConfirmation = async () => {
@@ -46,6 +47,9 @@ export default function ReviewSighting({ sightingData, onConfirmation }) {
         </Marker>
       </Map>
       <ul>
+        <li>
+          <img src={imageUrl} alt="selected bird species" />
+        </li>
         <li>{speciesClass}</li>
         <li>{`lat: ${latitude} long: ${longitude}`}</li>
         <li>{date.toLocaleDateString()}</li>

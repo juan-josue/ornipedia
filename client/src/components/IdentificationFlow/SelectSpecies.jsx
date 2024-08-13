@@ -43,7 +43,10 @@ export default function SpeciesSelector({ imageUrl, onConfirmation }) {
   return (
     <div>
       {isLoading ? (
-        "Predicting species..."
+        <div>
+          "Predicting species..."
+          <img src={imageUrl} alt="bird species" />
+        </div>
       ) : (
         <ul>
           {speciesData.map((species) => (

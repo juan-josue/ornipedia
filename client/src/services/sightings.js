@@ -6,6 +6,7 @@ function getUserID() {
 
 export async function reportSighting(sightingData) {
   const {
+    imageUrl,
     speciesClass,
     coordinates: { latitude, longitude },
     date,
@@ -18,6 +19,7 @@ export async function reportSighting(sightingData) {
     longitude,
     date,
     user_id: uid,
+    image_url: imageUrl
   }).select();
 
   if (error) {

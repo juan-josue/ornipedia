@@ -40,6 +40,7 @@ export default function IdentificationFlow() {
 
   const handleSightingConfirmation = () => {
     reportSighting({
+      imageUrl,
       speciesClass,
       coordinates,
       date,
@@ -67,6 +68,7 @@ export default function IdentificationFlow() {
       return (
         <ReviewSighting
           sightingData={{
+            imageUrl,
             speciesClass,
             coordinates,
             date,
