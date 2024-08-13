@@ -6,6 +6,7 @@ import SelectSpecies from "./SelectSpecies";
 import Location from "./Location";
 import SelectDate from "./SelectDate";
 import ReviewSighting from "./ReviewSighting";
+import IdentificationStepsBar from "./IdentificationStepsBar";
 
 import { reportSighting } from "../../services/sightings";
 
@@ -45,38 +46,52 @@ export default function IdentificationFlow() {
       coordinates,
       date,
     });
-    navigate('/dashboard')
+    navigate("/dashboard");
   };
 
-  switch (step) {
-    case "IMAGE UPLOAD":
-      return <ImageUpload onImageUrl={handleImageUpload} />;
-    case "SELECT SPECIES":
-      return (
-        <SelectSpecies imageUrl={imageUrl} onConfirmation={handleSpeciesConfirmation} />
-      );
-    case "SELECT LOCATION":
-      return (
-        <Location
-          speciesClass={speciesClass}
-          onConfirmation={handleLocationConfirmation}
-        />
-      );
-    case "SELECT DATE":
-      return <SelectDate onConfirmation={handleDateConfirmation} />;
-    case "REVIEW ENTRY":
-      return (
-        <ReviewSighting
-          sightingData={{
-            imageUrl,
-            speciesClass,
-            coordinates,
-            date,
-          }}
-          onConfirmation={handleSightingConfirmation}
-        />
-      );
-    default:
-      return <div>Something went wrong on our side...</div>;
-  }
+  const renderStep = () => {
+    switch (step) {
+      case "IMAGE UPLOAD":
+        return <ImageUpload onImageUrl={handleImageUpload} />;
+      case "SELECT SPECIES":
+        return (
+          <SelectSpecies
+            imageUrl={imageUrl}
+            onConfirmation={handleSpeciesConfirmation}
+          />
+        );
+      case "SELECT LOCATION":
+        return (
+          <Location
+            speciesClass={speciesClass}
+            onConfirmation={handleLocationConfirmation}
+          />
+        );
+      case "SELECT DATE":
+        return <SelectDate onConfirmation={handleDateConfirmation} />;
+      case "REVIEW ENTRY":
+        return (
+          <ReviewSighting
+            sightingData={{
+              imageUrl,
+              speciesClass,
+              coordinates,
+              date,
+            }}
+            onConfirmation={handleSightingConfirmation}
+          />
+        );
+      default:
+        return <div>Something went wrong on our side...</div>;
+    }
+  };
+
+  return (
+    <div className="flex flex-row h-screen">
+      <div className="flex justify-center items-center bg-base-100 w-[250px] border-r-2 border-secondary-100">
+        <IdentificationStepsBar currentStep={step} />
+      </div>
+      <div className="bg-green-500 flex-grow">{renderStep()}</div>
+    </div>
+  );
 }

@@ -1,23 +1,30 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 
 export default function ImageUpload({ onImageUrl }) {
-  const [imageUrl, setImageUrl] = useState('https://miro.medium.com/v2/resize:fit:1400/0*eJ-vUsPwRRC_1dHS.jpg');
+  const [imageUrl, setImageUrl] = useState(
+    "https://miro.medium.com/v2/resize:fit:1400/0*eJ-vUsPwRRC_1dHS.jpg"
+  );
 
   const handleSubmit = () => {
     if (imageUrl) {
-        onImageUrl(imageUrl);
+      onImageUrl(imageUrl);
     }
-  }
+  };
 
   return (
-    <div>
+    <div className="flex bg-base-100 h-full justify-center items-center">
+      <div className="join">
         <input
-            type="text"
-            placeholder="Enter image URL"
-            value={imageUrl}
-            onChange={(e) => setImageUrl(e.target.value)}
+          type="text"
+          placeholder="Image URL"
+          className="input bg-base-200 join-item"
+          value={imageUrl}
+          onChange={(e) => setImageUrl(e.target.value)}
         />
-        <button onClick={handleSubmit}>Submit URL</button>
+        <button className="btn btn-primary join-item rounded-r-full" onClick={handleSubmit}>
+          Predict Species
+        </button>
+      </div>
     </div>
-  )
+  );
 }
