@@ -1,15 +1,22 @@
 import React, { useEffect, useState } from "react";
 import Map, { Marker } from "react-map-gl";
+import { useNavigate } from "react-router-dom";
 
 import { getAllSightings } from "../services/sightings";
 
 export default function Dashboard() {
+  const navigate = useNavigate();
+
   const [sightings, setSightings] = useState([]);
   const [viewState, setViewState] = useState({
     latitude: 14.839279,
     longitude: -89.142483,
     zoom: 1,
   });
+
+  const handleClick = () => {
+    navigate("/identification-flow");
+  };
 
   useEffect(() => {
     const fetchSightings = async () => {
@@ -39,11 +46,10 @@ export default function Dashboard() {
             latitude={sighting.latitude}
             longitude={sighting.longitude}
           >
-            {/* You can customize the marker content here */}
-            {/* For example, you can use an icon or a custom component */}
           </Marker>
         ))}
       </Map>
+      <button onClick={handleClick}>Report A Sighting</button>
     </div>
   );
 }
