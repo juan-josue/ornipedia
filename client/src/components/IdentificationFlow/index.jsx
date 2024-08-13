@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 
 import ImageUpload from "./ImageUpload";
 import SelectSpecies from "./SelectSpecies";
-import SpeciesData from "./SpeciesData";
 import Location from "./Location";
 import SelectDate from "./SelectDate";
 import ReviewSighting from "./ReviewSighting";
@@ -24,12 +23,8 @@ export default function IdentificationFlow() {
     setStep("SELECT SPECIES");
   };
 
-  const handleSpeciesSelect = (species) => {
+  const handleSpeciesConfirmation = (species) => {
     setSpeciesClass(species);
-    setStep("SPECIES DATA");
-  };
-
-  const handleSpeciesConfirmation = () => {
     setStep("SELECT LOCATION");
   };
 
@@ -57,14 +52,7 @@ export default function IdentificationFlow() {
       return <ImageUpload onImageUrl={handleImageUpload} />;
     case "SELECT SPECIES":
       return (
-        <SelectSpecies imageUrl={imageUrl} onSelect={handleSpeciesSelect} />
-      );
-    case "SPECIES DATA":
-      return (
-        <SpeciesData
-          speciesClass={speciesClass}
-          onConfirmation={handleSpeciesConfirmation}
-        />
+        <SelectSpecies imageUrl={imageUrl} onConfirmation={handleSpeciesConfirmation} />
       );
     case "SELECT LOCATION":
       return (

@@ -1,31 +1,58 @@
 import React, { useEffect, useState } from "react";
-
 import predictionRequest from "../../services/predictionRequest";
+import speciesDescriptionRequest from "../../services/speciesDescriptionRequest";
 
-export default function SelectSpecies({ imageUrl, onSelect }) {
-  const [speciesPredictions, setSpeciesPredictions] = useState([]);
-
-  const handleSelect = (selectedSpecies) => {
-    onSelect(selectedSpecies);
-  }
+export default function SpeciesSelector({ imageUrl, onConfirmation }) {
+  const [speciesData, setSpeciesData] = useState([]);
+  const [selectedSpecies, setSelectedSpecies] = useState(null);
 
   useEffect(() => {
-    const fetchSpeciesPredictions = async () => {
+    const fetchSpeciesData = async () => {
       try {
-        const data = await predictionRequest(imageUrl);
-        console.log("Fetched species predictions: ", data);
-        setSpeciesPredictions(data);
+        const predictions = await predictionRequest(imageUrl);
+        const speciesDataWithDescriptions = await Promise.all(
+          predictions.map(async (prediction) => {
+            const description = await speciesDescriptionRequest(
+              prediction.class
+            );
+            return { ...prediction, description };
+          })
+        );
+        setSpeciesData(speciesDataWithDescriptions);
       } catch (error) {
-        console.error("Error fetching species predictions:", error);
+        console.error("Error fetching species data:", error);
       }
     };
 
     if (imageUrl) {
-      fetchSpeciesPredictions();
+      fetchSpeciesData();
     }
   }, [imageUrl]);
 
-  return <div>{speciesPredictions && speciesPredictions.map((prediction, index) => {
-    return <div key={index} onClick={() => handleSelect(prediction.class)}>{ "species: " + prediction.class }</div>
-  })}</div>;
+  const handleSpeciesSelect = (species) => {
+    setSelectedSpecies(species);
+  };
+
+  const handleConfirmation = () => {
+    onConfirmation(selectedSpecies.class);
+  };
+
+  return (
+    <div>
+      <ul>
+        {speciesData.map((species) => (
+          <li key={species.class} onClick={() => handleSpeciesSelect(species)}>
+            {species.class}
+          </li>
+        ))}
+      </ul>
+      {selectedSpecies && (
+        <div>
+          <h2>{selectedSpecies.class}</h2>
+          <p>{selectedSpecies.description}</p>
+          <button onClick={handleConfirmation}>Confirm Species</button>
+        </div>
+      )}
+    </div>
+  );
 }
