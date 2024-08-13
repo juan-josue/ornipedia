@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import ImageUpload from "./ImageUpload";
 import SelectSpecies from "./SelectSpecies";
@@ -10,6 +11,8 @@ import ReviewSighting from "./ReviewSighting";
 import { reportSighting } from "../../services/sightings";
 
 export default function IdentificationFlow() {
+  const navigate = useNavigate();
+
   const [step, setStep] = useState("IMAGE UPLOAD");
   const [imageUrl, setImageUrl] = useState("");
   const [speciesClass, setSpeciesClass] = useState("");
@@ -46,6 +49,7 @@ export default function IdentificationFlow() {
       coordinates,
       date,
     });
+    navigate('/dashboard')
   };
 
   switch (step) {

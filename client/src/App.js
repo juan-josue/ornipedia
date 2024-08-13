@@ -1,7 +1,8 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import IdentificationFlow from "./components/IdentificationFlow";
 import Auth from "./components/Auth";
+import IdentificationFlow from "./components/IdentificationFlow";
+import Dashboard from "./components/Dashboard";
 
 function App() {
   const router = createBrowserRouter([
@@ -12,6 +13,10 @@ function App() {
     {
       path: "/identification-flow",
       element: <IdentificationFlow />,
+    },
+    {
+      path: "/dashboard",
+      element: <Dashboard />,
     },
   ]);
 
