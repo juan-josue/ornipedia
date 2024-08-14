@@ -14,13 +14,13 @@ module.exports = {
         ornipedia: {
           primary: "#22c55e",
 
-          secondary: "#f3f4f6",
+          secondary: "#44403c",
 
           accent: "#eab308",
 
           neutral: "#f3f4f6",
 
-          "base-100": "#292524",
+          "base-100": "#1c1917",
 
           info: "#f3f4f6",
 

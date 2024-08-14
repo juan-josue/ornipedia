@@ -88,10 +88,10 @@ export default function IdentificationFlow() {
 
   return (
     <div className="flex flex-row h-screen">
-      <div className="flex justify-center items-center bg-base-100 w-[250px] border-r-2 border-secondary-100">
+      <div className="flex p-[32px] justify-center items-center bg-base-100 w-[300px] border-r-2 border-secondary">
         <IdentificationStepsBar currentStep={step} />
       </div>
-      <div className="bg-green-500 flex-grow">{renderStep()}</div>
+      <div className="w-full p-[32px]">{renderStep()}</div>
     </div>
   );
 }

@@ -2,10 +2,19 @@ import React, { useEffect, useState } from "react";
 import predictionRequest from "../../services/predictionRequest";
 import speciesDescriptionRequest from "../../services/speciesDescriptionRequest";
 
+function LoadingScreen() {
+  return (
+    <div className="flex flex-col items-center gap-[64px]">
+      <span className="loading loading-spinner loading-lg size-[200px] text-primary"></span>
+      <h1>Predicting most likely bird species...</h1>
+    </div>
+  );
+}
+
 export default function SpeciesSelector({ imageUrl, onConfirmation }) {
   const [speciesData, setSpeciesData] = useState([]);
   const [selectedSpecies, setSelectedSpecies] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleSpeciesSelect = (species) => {
     setSelectedSpecies(species);
@@ -41,30 +50,46 @@ export default function SpeciesSelector({ imageUrl, onConfirmation }) {
   }, [imageUrl]);
 
   return (
-    <div>
+    <div className="flex bg-base-100 h-full justify-center items-center">
       {isLoading ? (
-        <div>
-          "Predicting species..."
-          <img src={imageUrl} width={20} height={20} alt="bird species" />
-        </div>
+        // machine learning loading screen
+        <LoadingScreen />
       ) : (
-        <ul>
-          {speciesData.map((species) => (
-            <li
-              key={species.class}
-              onClick={() => handleSpeciesSelect(species)}
-            >
-              {species.class}
-            </li>
-          ))}
-        </ul>
-      )}
-
-      {selectedSpecies && (
-        <div>
-          <h2>{selectedSpecies.class}</h2>
-          <p>{selectedSpecies.description}</p>
-          <button onClick={handleConfirmation}>Confirm Species</button>
+        // predicted species and selected species data
+        <div className="flex flex-row gap-[32px]">
+          <ul className="flex flex-col min-w-[200px] items-start gap-[16px]">
+            {speciesData.map((species, index) => {
+              return (
+                <li key={index}>
+                  <button
+                    className={`btn w-[200px] ${
+                      species.class === selectedSpecies?.class
+                        ? "btn-primary"
+                        : "btn-secondary"
+                    }`}
+                    onClick={() => handleSpeciesSelect(species)}
+                  >
+                    {species.class}
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+          <div>
+            {selectedSpecies && (
+              // selected species info
+              <div className="flex flex-col gap-[16px]">
+                <h1>{selectedSpecies.class}</h1>
+                <p>{selectedSpecies.description}</p>
+                <button
+                  className="btn btn-primary"
+                  onClick={handleConfirmation}
+                >
+                  Confirm Species
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       )}
     </div>

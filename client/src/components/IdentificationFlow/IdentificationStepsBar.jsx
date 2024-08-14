@@ -23,7 +23,16 @@ export default function IdentificationStepsBar({ currentStep }) {
     <div>
       <ul className="steps steps-vertical">
         {stepNames.map((stepName, index) => {
-          return <li key={index} className={`step ${index <= currentStepIndex ? 'step-primary' : ''}`}>{stepLabels[index]}</li>;
+          return (
+            <li
+              key={index}
+              className={`step ${
+                index <= currentStepIndex ? "step-primary" : ""
+              }`}
+            >
+              {stepLabels[index]}
+            </li>
+          );
         })}
       </ul>
     </div>
