@@ -5,7 +5,7 @@ import speciesDescriptionRequest from "../../services/speciesDescriptionRequest"
 function LoadingScreen() {
   return (
     <div className="flex flex-col items-center gap-[64px]">
-      <span className="loading loading-spinner loading-lg size-[200px] text-primary"></span>
+      <span className="loading loading-ring loading-lg size-[200px] text-primary"></span>
       <h1>Predicting most likely bird species...</h1>
     </div>
   );
