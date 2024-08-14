@@ -68,7 +68,12 @@ export default function IdentificationFlow() {
           />
         );
       case "SELECT DATE":
-        return <SelectDate onConfirmation={handleDateConfirmation} />;
+        return (
+          <SelectDate
+            speciesClass={speciesClass}
+            onConfirmation={handleDateConfirmation}
+          />
+        );
       case "REVIEW ENTRY":
         return (
           <ReviewSighting

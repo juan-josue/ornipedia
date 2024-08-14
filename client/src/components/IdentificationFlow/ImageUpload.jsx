@@ -12,7 +12,8 @@ export default function ImageUpload({ onImageUrl }) {
   };
 
   return (
-    <div className="flex bg-base-100 h-full justify-center items-center">
+    <div className="flex flex-col gap-[64px] bg-base-100 h-full justify-center items-center">
+      <h1 className="uppercase">Enter your bird photo url</h1>
       <div className="join">
         <input
           type="text"
