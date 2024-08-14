@@ -24,7 +24,7 @@ export default function ReviewSighting({ sightingData, onConfirmation }) {
             zoom: 15,
           }}
           style={{ width: 600, height: 400 }}
-          mapStyle="mapbox://styles/mapbox/satellite-streets-v12"
+          mapStyle="mapbox://styles/mapbox/outdoors-v12"
           dragPan={false}
           scrollZoom={false}
           doubleClickZoom={false}

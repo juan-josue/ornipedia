@@ -40,7 +40,7 @@ export default function Location({ speciesClass, onConfirmation }) {
           onMove={(evt) => setViewState(evt.viewState)}
           onClick={handleMapClick}
           style={{ width: 600, height: 400 }}
-          mapStyle="mapbox://styles/mapbox/satellite-streets-v12"
+          mapStyle="mapbox://styles/mapbox/outdoors-v12"
         >
           {marker && (
             <Marker
