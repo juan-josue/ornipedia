@@ -13,7 +13,10 @@ export default function ImageUpload({ onImageUrl }) {
 
   return (
     <div className="flex flex-col gap-[64px] bg-base-100 h-full justify-center items-center">
-      <h1 className="uppercase">Enter your bird photo url</h1>
+      <article className="prose text-center">
+        <h1 className="uppercase">Enter your bird photo url</h1>
+        <p className="capatalize">Right now were limited to photo urls, but i'll add file support soon.</p>
+      </article>
       <div className="join">
         <input
           type="text"
@@ -22,7 +25,10 @@ export default function ImageUpload({ onImageUrl }) {
           value={imageUrl}
           onChange={(e) => setImageUrl(e.target.value)}
         />
-        <button className="btn btn-primary join-item rounded-r-full" onClick={handleSubmit}>
+        <button
+          className="btn btn-primary join-item rounded-r-full"
+          onClick={handleSubmit}
+        >
           Predict Species
         </button>
       </div>

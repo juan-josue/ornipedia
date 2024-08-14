@@ -35,19 +35,18 @@ export default function ReviewSighting({ sightingData, onConfirmation }) {
         </Map>
         <div className="card-body bg-base-300">
           <h2 className="card-title">
-            {`Let's double check your sighting details`}
+            {`Nice find, let's review your sighting!`}
           </h2>
-          <p>If everything looks good, press continue.</p>
+          <p>{`You saw a lovely ${speciesClass} on ${date.toLocaleDateString()}.`}</p>
           <div className="flex flex-col items-center">
             <img
               src={imageUrl}
               className="mask mask-heart"
-              width={128}
-              height={128}
+              width={200}
+              height={200}
               alt="selected bird species"
             />
           </div>
-          <p>{`You saw a lovely ${speciesClass} on ${date.toLocaleDateString()}! Nice find!`}</p>
 
           <div className="card-actions justify-end">
             <button

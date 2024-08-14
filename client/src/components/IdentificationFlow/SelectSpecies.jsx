@@ -6,7 +6,12 @@ function LoadingScreen() {
   return (
     <div className="flex flex-col items-center gap-[64px]">
       <span className="loading loading-ring loading-lg size-[200px] text-primary"></span>
-      <h1>Predicting most likely bird species...</h1>
+      <article className="prose">
+        <h3 className="flex items-end gap-[8px]">
+          {"Predicting most likely bird species"}
+          <span className="loading loading-dots loading-md text-neautral"></span>
+        </h3>
+      </article>
     </div>
   );
 }
@@ -79,14 +84,19 @@ export default function SpeciesSelector({ imageUrl, onConfirmation }) {
             {selectedSpecies && (
               // selected species info
               <div className="flex flex-col gap-[16px]">
-                <h1>{selectedSpecies.class}</h1>
-                <p>{selectedSpecies.description}</p>
-                <button
-                  className="btn btn-primary"
-                  onClick={handleConfirmation}
-                >
-                  Confirm Species
-                </button>
+                <article className="prose">
+                  <h1>{selectedSpecies.class}</h1>
+                  <h2 className="text-neutral-200">scientific name</h2>
+                  <p>{selectedSpecies.description}</p>
+                </article>
+                <div className="flex justify-start">
+                  <button
+                    className="btn btn-primary"
+                    onClick={handleConfirmation}
+                  >
+                    Confirm Species
+                  </button>
+                </div>
               </div>
             )}
           </div>
