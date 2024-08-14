@@ -18,7 +18,7 @@ export default function ImageUpload({ onImageUrl }) {
         <input
           type="text"
           placeholder="Image URL"
-          className="input bg-base-200 join-item"
+          className="input w-[300px] bg-base-200 rounded-l-full px-[32px] join-item"
           value={imageUrl}
           onChange={(e) => setImageUrl(e.target.value)}
         />
