@@ -32,46 +32,42 @@ export default function Location({ speciesClass, onConfirmation }) {
   };
 
   return (
-    <div>
-    {`Where did you see the ${speciesClass}?`}
-      <Map
-        mapboxAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-        {...viewState}
-        onMove={(evt) => setViewState(evt.viewState)}
-        onClick={handleMapClick}
-        style={{ width: 600, height: 400 }}
-        mapStyle="mapbox://styles/mapbox/satellite-streets-v12"
-      >
-        {marker && (
-          <Marker
-            longitude={marker.longitude}
-            latitude={marker.latitude}
-            offsetLeft={-20}
-            offsetTop={-10}
-          >
-            <div
-              style={{
-                backgroundColor: "red",
-                borderRadius: "50%",
-                width: "20px",
-                height: "20px",
+    <div className="flex flex-col bg-base-100 h-full justify-center items-center">
+      <div className="card card-side bg-base-100 shadow-xl">
+        <Map
+          mapboxAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+          {...viewState}
+          onMove={(evt) => setViewState(evt.viewState)}
+          onClick={handleMapClick}
+          style={{ width: 600, height: 400 }}
+          mapStyle="mapbox://styles/mapbox/satellite-streets-v12"
+        >
+          {marker && (
+            <Marker
+              longitude={marker.longitude}
+              latitude={marker.latitude}
+              offsetLeft={-20}
+              offsetTop={-10}
+            ></Marker>
+          )}
+        </Map>
+        <div className="card-body bg-base-300">
+          <h2 className="card-title">
+            {`Where did you see the ${speciesClass}?`}
+          </h2>
+          <p>Use the map to select a location for your sighting.</p>
+          <div className="card-actions justify-end">
+            <button
+              className={`btn btn-primary ${marker ? '' : 'btn-disabled'}`}
+              onClick={() => {
+                handleConfirmation();
               }}
-            />
-          </Marker>
-        )}
-      </Map>
-      {marker && (
-        <div>
-          <button
-            onClick={() => {
-              handleConfirmation();
-            }}
-          >
-            Confirm Location
-          </button>
-          {`lat: ${marker.latitude}, lng: ${marker.longitude}`}
+            >
+              Confirm Location
+            </button>
+          </div>
         </div>
-      )}
+      </div>
     </div>
   );
 }
