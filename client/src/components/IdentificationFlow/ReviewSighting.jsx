@@ -6,7 +6,7 @@ export default function ReviewSighting({ sightingData, onConfirmation }) {
     imageUrl,
     speciesClass,
     coordinates: { latitude, longitude },
-    date
+    date,
   } = sightingData;
 
   const handleConfirmation = async () => {
@@ -14,53 +14,53 @@ export default function ReviewSighting({ sightingData, onConfirmation }) {
   };
 
   return (
-    <div>
-      <Map
-        mapboxAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-        initialViewState={{
-          longitude: longitude,
-          latitude: latitude,
-          zoom: 15,
-        }}
-        style={{ width: 600, height: 400 }}
-        mapStyle="mapbox://styles/mapbox/satellite-streets-v12"
-        dragPan={false}
-        scrollZoom={false}
-        doubleClickZoom={false}
-        dragRotate={false}
-        touchZoomRotate={false}
-      >
-        <Marker
-          longitude={longitude}
-          latitude={latitude}
-          offsetLeft={-20}
-          offsetTop={-10}
+    <div className="flex flex-col gap-[64px] bg-base-100 h-full justify-center items-center">
+      <div className="card card-side bg-base-100 shadow-xl">
+        <Map
+          mapboxAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+          initialViewState={{
+            longitude: longitude,
+            latitude: latitude,
+            zoom: 15,
+          }}
+          style={{ width: 600, height: 400 }}
+          mapStyle="mapbox://styles/mapbox/satellite-streets-v12"
+          dragPan={false}
+          scrollZoom={false}
+          doubleClickZoom={false}
+          dragRotate={false}
+          touchZoomRotate={false}
         >
-          <div
-            style={{
-              backgroundColor: "red",
-              borderRadius: "50%",
-              width: "20px",
-              height: "20px",
-            }}
-          />
-        </Marker>
-      </Map>
-      <ul>
-        <li>
-          <img src={imageUrl} width={20} height={20} alt="selected bird species" />
-        </li>
-        <li>{speciesClass}</li>
-        <li>{`lat: ${latitude} long: ${longitude}`}</li>
-        <li>{date.toLocaleDateString()}</li>
-      </ul>
-      <button
-        onClick={() => {
-          handleConfirmation();
-        }}
-      >
-        Confirm Entry
-      </button>
+          <Marker longitude={longitude} latitude={latitude}></Marker>
+        </Map>
+        <div className="card-body bg-base-300">
+          <h2 className="card-title">
+            {`Let's double check your sighting details`}
+          </h2>
+          <p>If everything looks good, press continue.</p>
+          <div className="flex flex-col items-center">
+            <img
+              src={imageUrl}
+              className="mask mask-heart"
+              width={128}
+              height={128}
+              alt="selected bird species"
+            />
+          </div>
+          <p>{`You saw a lovely ${speciesClass} on ${date.toLocaleDateString()}! Nice find!`}</p>
+
+          <div className="card-actions justify-end">
+            <button
+              className={`btn btn-primary`}
+              onClick={() => {
+                handleConfirmation();
+              }}
+            >
+              Continue
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

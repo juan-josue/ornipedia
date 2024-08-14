@@ -10,7 +10,7 @@ export default function SelectDate({ speciesClass, onConfirmation }) {
   };
   return (
     <div className="flex flex-col gap-[64px] bg-base-100 h-full justify-center items-center">
-      <h1 className="uppercase">{`When did you see the ${speciesClass}`}</h1>
+      <h1 className="uppercase">{`When did you see the ${speciesClass}?`}</h1>
       <div className="join">
         <div className="bg-base-300 flex justify-center items-center rounded-l-full px-[32px]">
           <DatePicker
