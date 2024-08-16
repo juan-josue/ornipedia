@@ -7,6 +7,16 @@ import Navbar from "./Navbar";
 
 import { getAllSightings } from "../services/sightings";
 
+function getLifeList(species) {
+  const uniqueSpecies = new Set();
+
+  species.forEach((species) => {
+    uniqueSpecies.add(species.species_class);
+  });
+
+  return Array.from(uniqueSpecies).sort();
+}
+
 export default function Dashboard() {
   const navigate = useNavigate();
   const mapRef = useRef();
@@ -46,11 +56,35 @@ export default function Dashboard() {
   console.log("rendered");
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-screen overflow-hidden">
       <Navbar />
 
       <div className="flex flex-row h-full flex-grow">
-        <div className="flex bg-base-100 w-[400px] border-r-2 border-secondary"></div>
+        <div className="flex flex-col justify-end bg-base-100 w-[400px] border-r-2 border-secondary">
+          <div className="flex flex-col w-full h-full p-[16px]">
+            <article className="prose">
+              <h3 className="text-neutral m-0">{`Life List`}</h3>
+              <p className="text-secondary-200 m-0">{`${
+                sightings && getLifeList(sightings).length
+              } birds`}</p>
+            </article>
+            <ol className="overflow-y-scroll">
+              {sightings &&
+                getLifeList(sightings).map((species, index) => {
+                  return (
+                    <li
+                      key={index}
+                      className="border-b-2 border-secondary py-[16px]"
+                    >
+                      <article className="prose">
+                        <p className="text-neutral m-0">{species}</p>
+                      </article>
+                    </li>
+                  );
+                })}
+            </ol>
+          </div>
+        </div>
         <div className="relative flex w-full h-full">
           {/* sighting map */}
           <Map
@@ -78,7 +112,10 @@ export default function Dashboard() {
             className="absolute flex flex-col gap-[16px] w-[300px] right-[16px] top-[50%] p-[16px] rounded-md bg-base-100"
           >
             <article className="prose">
-              <h3 className="text-neutral">Sightings</h3>
+              <h3 className="text-neutral m-0">Sightings</h3>
+              <p className="text-secondary-200 m-0">{`${
+                sightings && sightings.length
+              } sightings`}</p>
             </article>
             <ol className="max-h-[500px] overflow-y-scroll">
               {sightings &&
@@ -86,7 +123,7 @@ export default function Dashboard() {
                   return (
                     <li
                       key={sighting.id}
-                      className="hover:bg-secondary hover:cursor-pointer border-b-2 border-secondary py-[16px]"
+                      className="flex flex-row justify-between hover:bg-secondary hover:cursor-pointer border-b-2 border-secondary py-[16px]"
                       onClick={() => {
                         onSelectSighting(sighting.latitude, sighting.longitude);
                       }}
@@ -99,6 +136,13 @@ export default function Dashboard() {
                           {sighting.date.substring(0, 10)}
                         </p>
                       </article>
+                      <img
+                        className="mask mask-square"
+                        src={sighting.image_url}
+                        alt="sighting"
+                        width={64}
+                        height={64}
+                      />
                     </li>
                   );
                 })}
