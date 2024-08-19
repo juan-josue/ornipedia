@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import heroImage from "../assets/images/heron10.jpg";
+import heroImage from "../assets/images/heron_hero.jpeg";
 
 export default function Landing() {
   const navigate = useNavigate();

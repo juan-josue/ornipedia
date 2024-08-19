@@ -53,8 +53,6 @@ export default function Dashboard() {
     fetchSightings();
   }, []);
 
-  console.log("rendered");
-
   return (
     <div className="flex flex-col h-screen overflow-hidden">
       <Navbar />
