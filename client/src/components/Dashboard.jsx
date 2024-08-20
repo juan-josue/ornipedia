@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Map, { Marker } from "react-map-gl";
+import Map, { Marker, Popup } from "react-map-gl";
 import { useNavigate } from "react-router-dom";
-import { useRef, useCallback } from "react";
+import { useRef } from "react";
 
 import Navbar from "./Navbar";
 
@@ -22,6 +22,7 @@ export default function Dashboard() {
   const mapRef = useRef();
 
   const [sightings, setSightings] = useState([]);
+  const [selectedSighting, setSelectedSighting] = useState(null);
   const [viewState, setViewState] = useState({
     latitude: 14.839279,
     longitude: -89.142483,
@@ -32,22 +33,20 @@ export default function Dashboard() {
     navigate("/identification-flow");
   };
 
-  const onSelectSighting = useCallback((latitude, longitude) => {
+  const onSelectSighting = (sighting) => {
     mapRef.current?.flyTo({
-      center: [longitude, latitude],
-      duration: 5000,
+      center: [sighting.longitude, sighting.latitude],
+      duration: 4000,
       zoom: 12,
     });
-  }, []);
+    setSelectedSighting(sighting);
+  };
 
   useEffect(() => {
     const fetchSightings = async () => {
       const data = await getAllSightings();
       if (data) {
-        console.log("fetched user sightings: ", data);
         setSightings(data);
-      } else {
-        console.log("Failed to fetch user sightings");
       }
     };
     fetchSightings();
@@ -93,15 +92,49 @@ export default function Dashboard() {
             className="absolute top-0 left-0 w-full h-full -z-10"
             mapStyle="mapbox://styles/mapbox/outdoors-v12"
           >
-            {sightings.map((sighting) => (
-              <Marker
-                key={sighting.id}
-                latitude={sighting.latitude}
-                longitude={sighting.longitude}
-                offsetLeft={-20}
-                offsetTop={-10}
-              ></Marker>
-            ))}
+            {sightings &&
+              sightings.map((sighting) => {
+                return (
+                  <Marker
+                    key={sighting.id}
+                    latitude={sighting.latitude}
+                    longitude={sighting.longitude}
+                    offsetLeft={-20}
+                    offsetTop={-10}
+                    onClick={(e) => {
+                      e.originalEvent.stopPropagation();
+                      onSelectSighting(sighting);
+                    }}
+                  />
+                );
+              })}
+            {selectedSighting && (
+              <Popup
+                longitude={selectedSighting.longitude}
+                latitude={selectedSighting.latitude}
+                anchor="bottom"
+                onClose={() => setSelectedSighting(null)}
+                closeButton={false} // Hide default close button
+                closeOnClick={true}
+                className="rounded-lg p-4"
+              >
+                <div>
+                  <img
+                    className="w-full h-32 object-cover rounded-lg"
+                    src={selectedSighting.image_url}
+                    alt={selectedSighting.species_class}
+                  />
+                  <article className="prose mt-[16px]">
+                    <h4 className="text-base-100">
+                      {selectedSighting.species_class}
+                    </h4>
+                    <p>
+                      {new Date(selectedSighting.date).toLocaleDateString()}
+                    </p>
+                  </article>
+                </div>
+              </Popup>
+            )}
           </Map>
 
           {/* sighting controls */}
@@ -123,7 +156,7 @@ export default function Dashboard() {
                       key={sighting.id}
                       className="flex flex-row justify-between hover:bg-secondary hover:cursor-pointer border-b-2 border-secondary py-[16px]"
                       onClick={() => {
-                        onSelectSighting(sighting.latitude, sighting.longitude);
+                        onSelectSighting(sighting);
                       }}
                     >
                       <article className="prose">
