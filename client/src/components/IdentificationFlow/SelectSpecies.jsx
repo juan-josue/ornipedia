@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
+
 import predictionRequest from "../../services/predictionRequest";
 import speciesDescriptionRequest from "../../services/speciesDescriptionRequest";
+import speciesImageRequest from "../../services/speciesImageRequest";
 
 function LoadingScreen() {
   return (
@@ -39,7 +41,8 @@ export default function SpeciesSelector({ imageUrl, onConfirmation }) {
             const description = await speciesDescriptionRequest(
               prediction.class
             );
-            return { ...prediction, description };
+            const imageUrl = await speciesImageRequest(prediction.class);
+            return { ...prediction, description, imageUrl };
           })
         );
         setSpeciesData(speciesDataWithDescriptions);
@@ -84,9 +87,14 @@ export default function SpeciesSelector({ imageUrl, onConfirmation }) {
             {selectedSpecies && (
               // selected species info
               <div className="flex flex-col gap-[16px]">
+                <img
+                  className="w-[200px] h-[200px] rounded-[16px]"
+                  src={selectedSpecies.imageUrl}
+                  alt={selectedSpecies.class}
+                />
                 <article className="prose">
-                  <h1>{selectedSpecies.class}</h1>
-                  <h2 className="text-neutral-200">scientific name</h2>
+                  <h2>{selectedSpecies.class}</h2>
+                  <h3 className="text-neutral-200">scientific name</h3>
                   <p>{selectedSpecies.description}</p>
                 </article>
                 <div className="flex justify-start">
