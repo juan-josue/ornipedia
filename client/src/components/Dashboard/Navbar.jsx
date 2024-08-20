@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { signout } from "../../services/auth";
 
-export default function Navbar() {
+export default function Navbar({ onToggle }) {
   const navigate = useNavigate();
 
   const handleSignOut = () => {
@@ -13,10 +13,17 @@ export default function Navbar() {
 
   return (
     <div className="navbar bg-base-100 border-b-2 border-secondary">
-      <div className="flex-1">
+      <div className="navbar-start">
         <a className="btn btn-ghost text-xl">Ornipedia</a>
       </div>
-      <div className="flex-none">
+      <div className="navbar-center">
+        <div className="flex items-center gap-[16px]">
+          <span>Map</span>
+          <input type="checkbox" className="toggle" onChange={onToggle} />
+          <span>Gallery</span>
+        </div>
+      </div>
+      <div className="navbar-end">
         <button className="btn btn-square btn-ghost" onClick={handleSignOut}>
           <svg
             xmlns="http://www.w3.org/2000/svg"

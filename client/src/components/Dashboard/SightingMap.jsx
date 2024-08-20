@@ -1,16 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import Map from "react-map-gl";
 
-import { getAllSightings } from "../../services/sightings";
 import SightingList from "./SightingList";
 import LifeList from "./LifeList";
 import SightingPopup from "./SightingPopup";
 import SightingMarker from "./SightingMarker";
 
-export default function SightingMap() {
+export default function SightingMap({ sightings }) {
   const mapRef = useRef();
-
-  const [sightings, setSightings] = useState([]);
   const [selectedSighting, setSelectedSighting] = useState(null);
   const [viewState, setViewState] = useState({
     latitude: 14.839279,
@@ -32,15 +29,6 @@ export default function SightingMap() {
     setSelectedSighting(sighting);
   };
 
-  useEffect(() => {
-    const fetchSightings = async () => {
-      const data = await getAllSightings();
-      if (data) {
-        setSightings(data);
-      }
-    };
-    fetchSightings();
-  }, []);
   return (
     <>
       <div className="flex flex-col justify-end bg-base-100 w-[400px] border-r-2 border-secondary">
