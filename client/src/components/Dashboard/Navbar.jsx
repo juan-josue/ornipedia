@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import { signout } from "../services/auth";
+import { signout } from "../../services/auth";
 
 export default function Navbar() {
   const navigate = useNavigate();
