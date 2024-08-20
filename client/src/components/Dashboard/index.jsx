@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import Navbar from "./Navbar";
 import SightingMap from "./SightingMap";
+import Gallery from "./Gallery";
 
 import { getAllSightings } from "../../services/sightings";
 
@@ -30,7 +31,7 @@ export default function Dashboard() {
       <Navbar onToggle={handleToggle} />
       <div className="flex flex-row h-full flex-grow">
         {dashboardDisplay === "map" && <SightingMap sightings={sightings} />}
-        {dashboardDisplay === "gallery" && <div>Gallery Page</div>}
+        {dashboardDisplay === "gallery" && <Gallery sightings={sightings} />}
       </div>
     </div>
   );

@@ -11,7 +11,7 @@ function SightingListItem({ sighting, onSelectSighting }) {
     >
       <article className="prose">
         <p className="text-neutral m-0">{sighting.species_class}</p>
-        <p className="text-secodary m-0">{sighting.date.substring(0, 10)}</p>
+        <p className="text-secodary m-0">{new Date(sighting.date).toLocaleDateString()}</p>
       </article>
       <img
         className="mask mask-square"
