@@ -1,25 +1,23 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+
 import heroImage from "../assets/images/heron_hero.jpeg";
 
 export default function Landing() {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col min-h-screen px-[32px] max-w-[1400px] m-auto overflow-x-hidden bg-base-100">
-      <section className="w-full">
-        <div className="flex flex-row justify-between">
-          <a className="text-2xl mt-[16px] text-neutral font-bold">Ornipedia</a>
-          <a className="text-md mt-[16px] text-secondary">
-            A project by Juan Gutierrez Moreno
-          </a>
-        </div>
-      </section>
-
+    <div className="flex flex-col gap-[64px] max-w-[1400px] min-h-screen px-[32px] m-auto mb-[64px] overflow-x-hidden bg-base-100">
       {/* hero bann*er */}
       <section>
+        <div className="flex justify-between items-end mt-[16px]">
+          <p className="text-2xl text-neutral font-bold">Ornipedia</p>
+          <p className="text-md text-secondary">
+            A project by Juan Gutierrez Moreno
+          </p>
+        </div>
         <div
-          className="flex flex-col h-[600px] gap-[32px] mt-[16px] bg-base-100 rounded-[16px] p-[64px] pt-[128px]"
+          className="flex flex-col gap-[32px] h-[600px] bg-base-100 rounded-[16px] mt-[16px] p-[64px] pt-[128px]"
           style={{
             backgroundImage: `url(${heroImage})`,
             backgroundSize: "cover",
@@ -30,25 +28,23 @@ export default function Landing() {
             <h1 className="text-7xl m-0 text-neutral">
               Classify your bird in seconds.
             </h1>
-            <p className="text-neutral mt-[16px]">
+            <p className="text-neutral">
               Next-level birding starts here. Our AI is trained on 500+ species.
             </p>
           </article>
-          <div className="mt-[16px]">
-            <button
-              className="btn btn-primary min-w-[200px] text-xl shadow-xl"
-              onClick={() => {
-                navigate("/signup");
-              }}
-            >
-              Sign Up
-            </button>
-          </div>
+          <button
+            className="btn btn-primary w-[200px] text-xl shadow-xl"
+            onClick={() => {
+              navigate("/signup");
+            }}
+          >
+            Sign Up
+          </button>
         </div>
       </section>
 
       {/* info text */}
-      <section className="w-full mt-[64px]">
+      <section>
         <div className="flex justify-between items-center">
           <article className="prose w-1/2">
             <h2 className="text-5xl">
@@ -66,7 +62,7 @@ export default function Landing() {
       </section>
 
       {/* feature cards */}
-      <section className="w-full mt-[64px]">
+      <section>
         <div className="grid grid-rows-2 grid-cols-2 gap-[32px] max-h-[700px]">
           <div className="card card-compact bg-secondary shadow-xl">
             <figure>
@@ -77,7 +73,10 @@ export default function Landing() {
             </figure>
             <div className="card-body">
               <h2 className="card-title">Rapid Bird Identification</h2>
-              <p>Our machine learning model swiftly identifies bird species from a photo, making birding easier and more enjoyable.</p>
+              <p>
+                Our machine learning model swiftly identifies bird species from
+                a photo, making birding easier and more enjoyable.
+              </p>
             </div>
           </div>
 
@@ -106,17 +105,20 @@ export default function Landing() {
             </figure>
             <div className="card-body">
               <h2 className="card-title">Build Your Bird Collection</h2>
-              <p>Create a visual library of your bird sightings. Save, share, and revisit your favorite photos.</p>
+              <p>
+                Create a visual library of your bird sightings. Save, share, and
+                revisit your favorite photos.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
       {/* gif */}
-      <section className="w-full my-[64px]">
+      <section>
         <div className="flex gap-[32px] items-center">
           <div
-            className="flex flex-col w-3/5 h-[350px] gap-[32px] mt-[16px] bg-base-100 rounded-[16px] p-[64px] pt-[128px]"
+            className="flex flex-co gap-[32px] w-3/5 h-[350px] bg-base-100 rounded-[16px]"
             style={{
               backgroundImage: `url(https://www.padstowsealifesafaris.co.uk/wp-content/uploads/gannet-seabird.gif)`,
               backgroundSize: "cover",
@@ -131,7 +133,7 @@ export default function Landing() {
               platform is your ultimate birding companion.
             </p>
             <button
-              className="btn btn-neutral min-w-[200px] text-xl shadow-xl"
+              className="btn btn-neutral w-[200px] text-xl shadow-xl"
               onClick={() => {
                 navigate("/signup");
               }}
