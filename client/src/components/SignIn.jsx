@@ -8,10 +8,15 @@ export default function SignIn() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleSignin = async () => {
-    await signin(email, password);
-    navigate("/dashboard");
+    try {
+      await signin(email, password);
+      navigate("/dashboard");
+    } catch (error) {
+      setErrorMessage(error.message);
+    }
   };
 
   return (
@@ -63,6 +68,8 @@ export default function SignIn() {
                 }}
               />
             </label>
+
+            {errorMessage && <p className="text-error">{errorMessage}</p>}
 
             <button className="btn btn-primary" onClick={handleSignin}>
               Sign In

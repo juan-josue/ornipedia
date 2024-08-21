@@ -8,10 +8,15 @@ export default function SignUp() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleSignup = async () => {
-    await signup(email, password);
-    navigate("/identification-flow");
+    try {
+      await signup(email, password);
+      navigate("/identification-flow");
+    } catch (error) {
+      setErrorMessage(error.message);
+    }
   };
 
   return (
@@ -62,6 +67,8 @@ export default function SignUp() {
                 }}
               />
             </label>
+
+            {errorMessage && <p className="text-error">{errorMessage}</p>}
 
             <button className="btn btn-primary" onClick={handleSignup}>
               Sign Up
