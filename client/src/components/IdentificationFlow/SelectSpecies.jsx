@@ -36,16 +36,17 @@ export default function SpeciesSelector({ imageUrl, onConfirmation }) {
       setIsLoading(true);
       try {
         const predictions = await predictionRequest(imageUrl);
-        const speciesDataWithDescriptions = await Promise.all(
+        const speciesDataResult = await Promise.all(
           predictions.map(async (prediction) => {
             const description = await speciesDescriptionRequest(
               prediction.class
             );
-            const imageUrl = await speciesImageRequest(prediction.class);
-            return { ...prediction, description, imageUrl };
+            const { name, scientific_name, appearance, habitat } = description;
+            const image_url = await speciesImageRequest(prediction.class);
+            return { ...prediction, name, scientific_name, appearance, habitat, image_url };
           })
         );
-        setSpeciesData(speciesDataWithDescriptions);
+        setSpeciesData(speciesDataResult);
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching species data:", error);
@@ -89,13 +90,14 @@ export default function SpeciesSelector({ imageUrl, onConfirmation }) {
               <div className="flex flex-col gap-[16px]">
                 <img
                   className="w-[200px] h-[200px] rounded-[16px]"
-                  src={selectedSpecies.imageUrl}
+                  src={selectedSpecies.image_url}
                   alt={selectedSpecies.class}
                 />
                 <article className="prose">
                   <h2>{selectedSpecies.class}</h2>
-                  <h3 className="text-neutral-200">scientific name</h3>
-                  <p>{selectedSpecies.description}</p>
+                  <h3 className="text-neutral-200">{selectedSpecies.scientific_name}</h3>
+                  <p>{selectedSpecies.appearance}</p>
+                  <p>{selectedSpecies.habitat}</p>
                 </article>
                 <div className="flex justify-start">
                   <button

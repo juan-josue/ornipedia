@@ -11,6 +11,7 @@ tensorflow = "*"
 openai = "*"
 flask-cors = "*"
 python-dotenv = "*"
+pydantic = "*"
 
 [dev-packages]
 
