@@ -19,14 +19,14 @@ export default function SignIn() {
       {/* navbar */}
       <div className="navbar fixed bg-base-100 border-b-2 border-secondary">
         <div className="flex">
-          <a
-            className="btn btn-ghost text-xl"
+          <p
+            className="btn btn-ghost text-2xl font-bold"
             onClick={() => {
               navigate("/");
             }}
           >
             Ornipedia
-          </a>
+          </p>
         </div>
       </div>
 
@@ -36,10 +36,9 @@ export default function SignIn() {
         <div className="h-full flex flex-col gap-[32px] justify-center items-center border-r-2 border-secondary">
           <article className="prose w-[600px]">
             <h1>Got any new finds?</h1>
-            <p>
-              Welcome back, we're excited to see what you've found.
-            </p>
+            <p>Welcome back, we're excited to see what you've found.</p>
           </article>
+
           <div className="flex flex-col gap-[16px] w-[600px]">
             <label className="input input-bordered flex items-center gap-2">
               Email
@@ -52,6 +51,7 @@ export default function SignIn() {
                 }}
               />
             </label>
+
             <label className="input input-bordered flex items-center gap-2">
               Password
               <input
@@ -63,19 +63,19 @@ export default function SignIn() {
                 }}
               />
             </label>
+
             <button className="btn btn-primary" onClick={handleSignin}>
               Sign In
             </button>
+
             <p>
               Don't have an account?{" "}
-              <a
+              <span
                 className="link link-hover"
-                onClick={() => {
-                  navigate("/signup");
-                }}
+                onClick={() => navigate("/signup")}
               >
                 Sign Up
-              </a>
+              </span>
             </p>
           </div>
         </div>
