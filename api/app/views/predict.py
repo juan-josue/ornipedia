@@ -5,8 +5,11 @@ predict = Blueprint('predict', __name__)
 
 from app.utils.predict_species_from_url import predict_species_from_url
 
-@predict.route('/', methods=['POST'])
-def predict_image_from_url():    
+@predict.route('/', methods=['POST', 'OPTIONS'])
+def predict_image_from_url():
+    if request.method == 'OPTIONS':
+        return jsonify({'message': 'CORS preflight response'}), 200
+        
     # Retrieve image url from request
     data = request.get_json()
     if 'image_url' not in data:
@@ -20,7 +23,7 @@ def predict_image_from_url():
     # Predict species and obtain species data
     species_data = predict_species_from_url(image_url)
     if species_data is None:
-            return jsonify({"error": "Species data could not be retrieved"}), 404
+            return jsonify({"error": "Species predictions could not be made from provided url"}), 404
     
     # Return output as json
     response = jsonify(species_data)
