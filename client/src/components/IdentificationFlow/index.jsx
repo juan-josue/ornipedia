@@ -7,6 +7,7 @@ import Location from "./Location";
 import SelectDate from "./SelectDate";
 import ReviewSighting from "./ReviewSighting";
 import IdentificationStepsBar from "./IdentificationStepsBar";
+import ErrorScreen from "../ErrorScreen";
 
 import { reportSighting } from "../../services/sightings";
 
@@ -40,13 +41,17 @@ export default function IdentificationFlow() {
   };
 
   const handleSightingConfirmation = () => {
-    reportSighting({
-      imageUrl,
-      speciesClass,
-      coordinates,
-      date,
-    });
-    navigate("/dashboard");
+    try {
+      reportSighting({
+        imageUrl,
+        speciesClass,
+        coordinates,
+        date,
+      });
+      navigate("/dashboard");
+    } catch (error) {
+      setStep("ERROR");
+    }
   };
 
   const renderStep = () => {
@@ -87,7 +92,15 @@ export default function IdentificationFlow() {
           />
         );
       default:
-        return <div>Something went wrong on our side...</div>;
+        return (
+          <div className="flex h-full w-full items-center justify-center">
+            <ErrorScreen
+              message={
+                "Something went wrong when reporting the sighting, please try again later."
+              }
+            />
+          </div>
+        );
     }
   };
 

@@ -13,21 +13,24 @@ export async function reportSighting(sightingData) {
   } = sightingData;
   const uid = getUserID();
 
-  const { data, error } = await supabase.from("sightings").insert({
-    species_class: speciesClass,
-    latitude,
-    longitude,
-    date,
-    user_id: uid,
-    image_url: imageUrl
-  }).select();
+  const { data, error } = await supabase
+    .from("sightings")
+    .insert({
+      species_class: speciesClass,
+      latitude,
+      longitude,
+      date,
+      user_id: uid,
+      image_url: imageUrl,
+    })
+    .select();
 
-  if (error) {
-    console.log(error.message);
-  } else {
-    console.log("Reported sighting: ", data);
+    if (error) {
+      console.error("Error reporting sighting:", error.message);
+      throw new Error(`Error reporting sighting: ${error.message}`);
+    } 
+    
     return data;
-  }
 }
 
 export async function getAllSightings() {
@@ -38,9 +41,10 @@ export async function getAllSightings() {
     .select("*")
     .eq("user_id", uid);
 
-  if (error) {
-    console.log(error.message);
-  } else {
+    if (error) {
+      console.error("Error fetching user sightings:", error.message);
+      throw new Error(`Error fetching user sightings: ${error.message}`);
+    } 
+    
     return data;
-  }
 }
