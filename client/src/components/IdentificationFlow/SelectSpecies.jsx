@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 
+import ErrorScreen from "../ErrorScreen";
+
 import predictionRequest from "../../services/predictionRequest";
 import speciesDescriptionRequest from "../../services/speciesDescriptionRequest";
 import speciesImageRequest from "../../services/speciesImageRequest";
@@ -22,6 +24,7 @@ export default function SpeciesSelector({ imageUrl, onConfirmation }) {
   const [speciesData, setSpeciesData] = useState([]);
   const [selectedSpecies, setSelectedSpecies] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState();
 
   const handleSpeciesSelect = (species) => {
     setSelectedSpecies(species);
@@ -41,22 +44,21 @@ export default function SpeciesSelector({ imageUrl, onConfirmation }) {
             const description = await speciesDescriptionRequest(
               prediction.class
             );
-            const { name, scientific_name, appearance, habitat } = description;
             const image_url = await speciesImageRequest(prediction.class);
             return {
               ...prediction,
-              name,
-              scientific_name,
-              appearance,
-              habitat,
+              ...description,
               image_url,
             };
           })
         );
         setSpeciesData(speciesDataResult);
         setIsLoading(false);
+        setErrorMessage('');
       } catch (error) {
         console.error("Error fetching species data:", error);
+        setErrorMessage(error.message);
+        setIsLoading(false);
       }
     };
 
@@ -67,7 +69,7 @@ export default function SpeciesSelector({ imageUrl, onConfirmation }) {
 
   return (
     <div className="flex bg-base-100 h-full justify-center items-center">
-      {isLoading ? (
+      {isLoading && !errorMessage ? (
         <LoadingScreen />
       ) : (
         <div className="flex flex-row gap-[32px]">
@@ -121,6 +123,7 @@ export default function SpeciesSelector({ imageUrl, onConfirmation }) {
           )}
         </div>
       )}
+      { errorMessage && <ErrorScreen message={errorMessage} /> }
     </div>
   );
 }
