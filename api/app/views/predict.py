@@ -19,6 +19,8 @@ def predict_image_from_url():
     
     # Predict species and obtain species data
     species_data = predict_species_from_url(image_url)
+    if species_data is None:
+            return jsonify({"error": "Species data could not be retrieved"}), 404
     
     # Return output as json
     response = jsonify(species_data)
