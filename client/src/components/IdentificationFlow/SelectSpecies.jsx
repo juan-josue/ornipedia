@@ -43,7 +43,14 @@ export default function SpeciesSelector({ imageUrl, onConfirmation }) {
             );
             const { name, scientific_name, appearance, habitat } = description;
             const image_url = await speciesImageRequest(prediction.class);
-            return { ...prediction, name, scientific_name, appearance, habitat, image_url };
+            return {
+              ...prediction,
+              name,
+              scientific_name,
+              appearance,
+              habitat,
+              image_url,
+            };
           })
         );
         setSpeciesData(speciesDataResult);
@@ -61,11 +68,10 @@ export default function SpeciesSelector({ imageUrl, onConfirmation }) {
   return (
     <div className="flex bg-base-100 h-full justify-center items-center">
       {isLoading ? (
-        // machine learning loading screen
         <LoadingScreen />
       ) : (
-        // predicted species and selected species data
         <div className="flex flex-row gap-[32px]">
+          {/* species prediction list */}
           <ul className="flex flex-col min-w-[200px] items-start gap-[16px]">
             {speciesData.map((species, index) => {
               return (
@@ -84,32 +90,35 @@ export default function SpeciesSelector({ imageUrl, onConfirmation }) {
               );
             })}
           </ul>
-          <div>
-            {selectedSpecies && (
-              // selected species info
-              <div className="flex flex-col gap-[16px]">
-                <img
-                  className="w-[200px] h-[200px] rounded-[16px]"
-                  src={selectedSpecies.image_url}
-                  alt={selectedSpecies.class}
-                />
-                <article className="prose">
-                  <h2>{selectedSpecies.class}</h2>
-                  <h3 className="text-neutral-200">{selectedSpecies.scientific_name}</h3>
-                  <p>{selectedSpecies.appearance}</p>
-                  <p>{selectedSpecies.habitat}</p>
-                </article>
-                <div className="flex justify-start">
-                  <button
-                    className="btn btn-primary"
-                    onClick={handleConfirmation}
-                  >
-                    Confirm Species
-                  </button>
-                </div>
+
+          {/* selected species info section */}
+          {selectedSpecies && (
+            <div className="flex flex-col gap-[16px]">
+              <img
+                className="w-[200px] h-[200px] rounded-[16px]"
+                src={selectedSpecies.image_url}
+                alt={selectedSpecies.class}
+              />
+
+              <article className="prose">
+                <h2>{selectedSpecies.class}</h2>
+                <h3 className="text-neutral-200">
+                  {selectedSpecies.scientific_name}
+                </h3>
+                <p>{selectedSpecies.appearance}</p>
+                <p>{selectedSpecies.habitat}</p>
+              </article>
+
+              <div className="flex justify-start">
+                <button
+                  className="btn btn-primary"
+                  onClick={handleConfirmation}
+                >
+                  Confirm Species
+                </button>
               </div>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       )}
     </div>
