@@ -26,5 +26,4 @@ def retrieve_species_data(species_name):
         "appearance": result.appearance,
         "habitat": result.habitat,
     }
-    print(data)
     return data
