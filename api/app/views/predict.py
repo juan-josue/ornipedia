@@ -1,4 +1,5 @@
 from flask import Blueprint, request, jsonify
+import validators
 
 predict = Blueprint('predict', __name__)
 
@@ -10,8 +11,11 @@ def predict_image_from_url():
     data = request.get_json()
     if 'image_url' not in data:
         return jsonify({"error": "No image URL provided"}), 400
-    
     image_url = data['image_url']
+    
+    # Validate the image URL
+    if not validators.url(image_url):
+        return jsonify({"error": "Invalid image URL provided"}), 400
     
     # Predict species and obtain species data
     species_data = predict_species_from_url(image_url)

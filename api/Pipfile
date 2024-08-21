@@ -12,6 +12,7 @@ openai = "*"
 flask-cors = "*"
 python-dotenv = "*"
 pydantic = "*"
+validators = "*"
 
 [dev-packages]
 
