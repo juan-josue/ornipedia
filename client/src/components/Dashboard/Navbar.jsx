@@ -14,7 +14,7 @@ export default function Navbar({ onToggle }) {
   return (
     <div className="navbar bg-base-100 border-b-2 border-secondary">
       <div className="navbar-start">
-        <p className="text-xl">Ornipedia</p>
+        <p className="text-2xl text-neutral font-bold">Ornipedia</p>
       </div>
       <div className="navbar-center">
         <div className="flex items-center gap-[16px]">
