@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { motion } from "framer-motion";
 
 export default function Gallery({ sightings }) {
   const [selectedSightingId, setSelectedSightingId] = useState(null);
@@ -13,7 +14,12 @@ export default function Gallery({ sightings }) {
 
   return (
     <div className="flex w-full justify-center">
-      <div className="grid grid-cols-3 gap-[16px] w-[900px] overflow-y-auto pt-[16px] pb-[100px]">
+      <motion.div
+        className="grid grid-cols-3 gap-[16px] w-[900px] overflow-y-auto pt-[16px] pb-[100px]"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+      >
         {sightings.map((sighting) => {
           const isSelected = sighting.id === selectedSightingId;
 
@@ -30,17 +36,22 @@ export default function Gallery({ sightings }) {
               onMouseLeave={() => handleMouseLeave()}
             >
               {isSelected && (
-                <div className="bg-base-300 p-[8px] rounded-b-[8px]">
+                <motion.div
+                  className="bg-base-300 p-[8px] rounded-b-[8px]"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5, ease: "easeOut" }}
+                >
                   <article className="prose">
                     <h4>{sighting.species_class}</h4>
                     <p>{new Date(sighting.date).toLocaleDateString()}</p>
                   </article>
-                </div>
+                </motion.div>
               )}
             </div>
           );
         })}
-      </div>
+      </motion.div>
     </div>
   );
 }

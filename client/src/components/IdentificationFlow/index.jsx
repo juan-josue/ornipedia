@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 import ImageUpload from "./ImageUpload";
 import SelectSpecies from "./SelectSpecies";
@@ -109,7 +110,15 @@ export default function IdentificationFlow() {
       <div className="flex p-[32px] justify-center items-center bg-base-100 w-[300px] border-r-2 border-secondary">
         <IdentificationStepsBar currentStep={step} />
       </div>
-      <div className="w-full p-[32px]">{renderStep()}</div>
+      <motion.div
+        className="w-full p-[32px]"
+        key={step}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+      >
+        {renderStep()}
+      </motion.div>
     </div>
   );
 }

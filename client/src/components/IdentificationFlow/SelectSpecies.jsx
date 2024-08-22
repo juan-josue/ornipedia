@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 import ErrorScreen from "../ErrorScreen";
 
@@ -54,7 +55,7 @@ export default function SpeciesSelector({ imageUrl, onConfirmation }) {
         );
         setSpeciesData(speciesDataResult);
         setIsLoading(false);
-        setErrorMessage('');
+        setErrorMessage("");
       } catch (error) {
         console.error("Error fetching species data:", error);
         setErrorMessage(error.message);
@@ -95,7 +96,13 @@ export default function SpeciesSelector({ imageUrl, onConfirmation }) {
 
           {/* selected species info section */}
           {selectedSpecies && (
-            <div className="flex flex-col gap-[16px]">
+            <motion.div
+              className="flex flex-col gap-[16px]"
+              key={selectedSpecies.class}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+            >
               <img
                 className="w-[200px] h-[200px] rounded-[16px]"
                 src={selectedSpecies.image_url}
@@ -119,11 +126,11 @@ export default function SpeciesSelector({ imageUrl, onConfirmation }) {
                   Confirm Species
                 </button>
               </div>
-            </div>
+            </motion.div>
           )}
         </div>
       )}
-      { errorMessage && <ErrorScreen message={errorMessage} /> }
+      {errorMessage && <ErrorScreen message={errorMessage} />}
     </div>
   );
 }

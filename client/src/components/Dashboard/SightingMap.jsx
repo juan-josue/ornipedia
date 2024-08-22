@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import Map from "react-map-gl";
+import { motion } from "framer-motion";
 
 import SightingList from "./SightingList";
 import LifeList from "./LifeList";
@@ -61,10 +62,16 @@ export default function SightingMap({ sightings }) {
           )}
         </Map>
 
-        <SightingList
-          sightings={sightings}
-          onSelectSighting={handleSelectSighting}
-        />
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+        >
+          <SightingList
+            sightings={sightings}
+            onSelectSighting={handleSelectSighting}
+          />
+        </motion.div>
       </div>
     </>
   );
