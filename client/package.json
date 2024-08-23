@@ -2,7 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:8080",
+  "proxy": "https://ornipedia.onrender.com",
   "dependencies": {
     "@supabase/supabase-js": "^2.45.1",
     "@testing-library/jest-dom": "^5.17.0",
