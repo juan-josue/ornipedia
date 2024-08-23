@@ -1,11 +1,14 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import 'mapbox-gl/dist/mapbox-gl.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import './input.css'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "mapbox-gl/dist/mapbox-gl.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import axios from "axios";
+import "./input.css";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+axios.defaults.baseURL = "https://ornipedia.onrender.com";
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <App />
