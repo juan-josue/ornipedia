@@ -9,7 +9,7 @@ from app.views.species_data import species_data as species_data_blueprint
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "https://ornipedia.vercel.app"}})
 
 # Import and register the Blueprints
 app.register_blueprint(predict_blueprint, url_prefix='/predict')
