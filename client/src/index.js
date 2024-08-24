@@ -6,7 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import axios from "axios";
 import "./input.css";
 
-axios.defaults.baseURL = "https://ornipedia.onrender.com";
+// axios.defaults.baseURL = "https://ornipedia.onrender.com";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
