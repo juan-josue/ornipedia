@@ -2,7 +2,7 @@ import axios from "axios";
 
 export default async function predictionRequest(image_url) {
   try {
-    const response = await axios.post("https://ornipedia.onrender.com/predict", {
+    const response = await axios.post("/predict/", {
       image_url: image_url,
     });
     return response.data;
