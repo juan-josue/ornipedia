@@ -1,5 +1,5 @@
 # Ornipedia - AI Bird Image Classification and Sighting Tracker
-![Ornipedia home page](docs/landing.jpg)
+![Ornipedia home page](./docs/media/landing.jpg)
 
 ## About This Project
 
@@ -12,19 +12,19 @@ Ornipedia is an AI-powered bird classification and sighting tracker designed to 
 ### Preview
 Identification Flow
 
-![Identification flow](docs/identification-flow.jpg)
+![Identification flow](./docs/media/identification-flow.jpg)
 
-The identification flow guides users through uploading an image, confirming the predicted species, selecting the location, and reviewing their sighting before submission.
+The identification flow guides users through uploading an image, confirming the predicted species, selecting the location, and reviewing their sightings before submission.
 
 Dashboard
 
-![Dashboard](docs/dashboard.jpg)
+![Dashboard](./docs/media/dashboard.jpg)
 
 The dashboard provides a comprehensive overview of logged sightings, with species details, locations, and dates.
 
 Gallery
 
-![Gallery](docs/gallery.jpg)
+![Gallery](./docs/media/gallery.jpg)
 
 The gallery showcases all sighted birds with corresponding images, offering users an engaging way to explore their birdwatching history.
 
