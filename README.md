@@ -3,15 +3,20 @@
 
 ## About This Project
 
-### Developers
-- Juan Josue Gutierrez Moreno
-
 ### Description
 Ornipedia is an AI-powered bird classification and sighting tracker designed to help bird enthusiasts identify bird species from photos and log their sightings. Leveraging machine learning and interactive maps, Ornipedia offers an intuitive user experience for casual and serious birdwatchers.
 
-You can find the live demo website here [Ornipedia](https://ornipedia.vercel.app/).
+Try the application:
+- Email: demo-user@demo.ca
+- Password: 1111111
+
+Explore the live demo here [Ornipedia](https://ornipedia.vercel.app/).
+
+### Developer
+- Juan Josue Gutierrez Moreno
 
 ### Preview
+
 Identification Flow
 ---
 
@@ -35,12 +40,11 @@ The gallery showcases all sighted birds with corresponding images, offering user
 
 ### Built With
 
-- React - For building the front-end user interface.
-- Tailwind CSS - To streamline styling and ensure responsiveness.
-- DaisyUI - For pre-styled UI components, enhancing the design.
-- Flask - As the backend framework, handling API requests and ML model integration.
-- Supabase - For user authentication and managing the bird sightings database.
-- TensorFlow - Powering the AI model for bird species classification.
+| Front End | Back End | Database |
+|---|---|---|
+| React | Flask | Supabase |
+| TailwindCSS | Tensorflow | |
+| DaisyUI | | |
 
 ## Road Map
 
@@ -49,10 +53,6 @@ The gallery showcases all sighted birds with corresponding images, offering user
 - [ ] Improve Model Accuracy - Retrain the model with a larger and more diverse dataset to enhance prediction accuracy.
 - [ ] Manual Species Entry and Lookup - Allow users to manually enter species data and search for species information.
 - [ ] Improve Identification Flow - Further streamline the user experience during the bird identification process.
-
-## Demo Account
-For your convenience, you can use this account to test out the application.
-- Email: demo-user@demo.ca Password: 111111
 
 ## Links
 - [Live Demo](https://ornipedia.vercel.app/)
